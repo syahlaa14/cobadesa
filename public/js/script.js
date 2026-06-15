@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SCRIPT.JS - WEBSITE PROFIL DESA MAKMUR SENTOSA (PREMIUM INTERACTIVE)
+   SCRIPT.JS - WEBSITE PROFIL DESA PASIR KULON (PREMIUM INTERACTIVE)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             label: "Detail Usaha & Lokasi:",
             placeholder: "Contoh: Toko Kelontong 'Barokah', RT 03 Dusun Mawar",
             previewLabel: "Jenis Usaha",
-            closing: "Benar bahwa nama di atas memiliki usaha yang terdaftar di Desa Makmur Sentosa dan dalam keadaan aktif. Surat Keterangan ini dibuat untuk memenuhi administrasi persyaratan pengajuan pinjaman modal usaha."
+            closing: "Benar bahwa nama di atas memiliki usaha yang terdaftar di Desa Pasir Kulon dan dalam keadaan aktif. Surat Keterangan ini dibuat untuk memenuhi administrasi persyaratan pengajuan pinjaman modal usaha."
         },
         sktm: {
             title: "SURAT KETERANGAN TIDAK MAMPU",
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             label: "Keperluan Pengajuan Surat:",
             placeholder: "Contoh: Pengajuan Beasiswa Pendidikan Sekolah Anak",
             previewLabel: "Tujuan Pengajuan",
-            closing: "Benar bahwa nama di atas adalah warga asli Desa Makmur Sentosa yang tergolong dalam keluarga ekonomi rentan/kurang mampu. Surat Keterangan ini dibuat sebagai lampiran persyaratan pengajuan bantuan sosial."
+            closing: "Benar bahwa nama di atas adalah warga asli Desa Pasir Kulon yang tergolong dalam keluarga ekonomi rentan/kurang mampu. Surat Keterangan ini dibuat sebagai lampiran persyaratan pengajuan bantuan sosial."
         },
         sp: {
             title: "SURAT PENGANTAR PENGURUSAN",
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             label: "Tujuan Pengurusan Dokumen:",
             placeholder: "Contoh: Pengurusan KTP Baru / Perekaman Data Kependudukan",
             previewLabel: "Tujuan Surat",
-            closing: "Benar bahwa nama di atas adalah penduduk yang berdomisili sah di Desa Makmur Sentosa. Surat Keterangan Pengantar ini dibuat untuk memperlancar administrasi pengurusan dokumen kependudukan tingkat Kecamatan."
+            closing: "Benar bahwa nama di atas adalah penduduk yang berdomisili sah di Desa Pasir Kulon. Surat Keterangan Pengantar ini dibuat untuk memperlancar administrasi pengurusan dokumen kependudukan tingkat Kecamatan."
         }
     };
 
@@ -243,40 +243,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Submit Document Generation (Simulation)
+    // Submit Document Generation (AJAX request to backend)
     docGeneratorForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
         const btn = document.getElementById('btnGenerate');
         const stamp = virtualLetter.querySelector('.virtual-stamp');
         
-        // Show loading simulation on button
         btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memvalidasi Dokumen...`;
         btn.disabled = true;
 
-        setTimeout(() => {
+        const formData = new FormData();
+        formData.append('name', document.getElementById('docName').value);
+        formData.append('nik', document.getElementById('docNik').value);
+        formData.append('address', document.getElementById('docAddress').value);
+        formData.append('detail', document.getElementById('docDetail').value);
+        formData.append('type', serviceSelector.value);
+
+        fetch('/api/layanan-surat', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
             btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Surat Berhasil Dibuat`;
             btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
             
+            // Update preview elements from server database data
+            prevNumber.textContent = data.data.nomor_surat.split(' / ')[1] || '142';
+            prevName.textContent = data.data.nama || data.data.name || '';
+            prevNik.textContent = data.data.nik;
+            prevAddress.textContent = data.data.alamat;
+            prevDynamicValue.textContent = data.data.keterangan;
+
             // Highlight stamp and add valid stamp class
             stamp.style.borderColor = '#dc2626';
             stamp.style.color = '#dc2626';
             stamp.textContent = 'TERVALIDASI';
             stamp.style.transform = 'translate(-50%, -50%) rotate(-12deg) scale(1.1)';
             
-            // Play a soft bounce animation on stamp
             setTimeout(() => {
                 stamp.style.transform = 'translate(-50%, -50%) rotate(-12deg) scale(1)';
             }, 200);
 
             // Pop success modal
             showSuccessModal(
-                "Draf Surat Siap!",
-                "Draf administrasi Anda telah berhasil dibuat dalam sistem. Anda dapat mencetaknya langsung atau menyimpannya sebagai file cadangan untuk dibawa ke Balai Desa."
+                "Draf Surat Tersimpan!",
+                data.message + " Draf ini dapat dicetak atau diunduh dan telah tercatat resmi di database desa."
             );
-
+        })
+        .catch(error => {
+            const errMsg = error.message || "Gagal menghubungkan ke server. Silakan cek koneksi Anda.";
+            showSuccessModal(
+                "Pembuatan Surat Gagal",
+                errMsg
+            );
+            btn.innerHTML = `<i class="fa-solid fa-file-shield"></i> Buat Draf Surat`;
+            btn.style.background = '';
+        })
+        .finally(() => {
             btn.disabled = false;
-        }, 1500);
+        });
     });
 
     // Printing function: Opens print frame of just the letter
@@ -289,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(`
             <html>
                 <head>
-                    <title>Cetak Surat Keterangan - Desa Makmur Sentosa</title>
+                    <title>Cetak Surat Keterangan - Desa Pasir Kulon</title>
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
                     <style>
                         body {
@@ -364,55 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('btnPrintLetter').addEventListener('click', printLetter);
-
-    // Mock Download PDF Action
-    document.getElementById('btnDownloadPDF').addEventListener('click', () => {
-        const btn = document.getElementById('btnDownloadPDF');
-        const originalText = btn.innerHTML;
-        
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengompresi PDF...`;
-        btn.disabled = true;
-
-        setTimeout(() => {
-            // Generate a simple TXT blob to simulate download
-            const name = prevName.textContent;
-            const docTitle = prevTitle.textContent;
-            const letterText = `
-==================================================
-KANTOR KEPALA DESA MAKMUR SENTOSA
-DRAFT LAYANAN SURAT MANDIRI ONLINE
-==================================================
-Tipe Surat: ${docTitle}
-Nomor     : 503 / ${prevNumber.textContent} / VIII / 2026
-
-Nama      : ${name}
-NIK       : ${prevNik.textContent}
-Alamat    : ${prevAddress.textContent}
-${prevDynamicLabel.textContent} : ${prevDynamicValue.textContent}
-
---------------------------------------------------
-Status Draf: TERVALIDASI SYSTEM DIGITAL
-Gunakan file draf ini untuk ditukarkan ke 
-petugas administrasi kantor desa untuk cetak resmi.
-==================================================
-            `;
-            
-            const blob = new Blob([letterText], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Draft_${docTitle.replace(/\s+/g, '_')}_${name.replace(/\s+/g, '_')}.txt`;
-            link.click();
-
-            btn.innerHTML = `<i class="fa-solid fa-circle-down"></i> Unduh Berhasil`;
-            btn.style.background = '#0284c7';
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 2000);
-        }, 1200);
-    });
 
 
     /* ==========================================
@@ -525,4 +512,48 @@ petugas administrasi kantor desa untuk cetak resmi.
             }
         });
     }
+
+    /* ==========================================
+       7. PROFILE DETAIL TABS SWITCHER
+       ========================================== */
+    const tabButtons = document.querySelectorAll('.profile-tab-btn');
+    const tabPanes = document.querySelectorAll('.profile-tab-pane');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            
+            // Deactivate all
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Activate current
+            btn.classList.add('active');
+            const targetPane = document.getElementById(targetId);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        });
+    });
+
+    /* ==========================================
+       8. HORIZONTAL CAROUSEL SLIDER FOR OLDER NEWS/EVENTS
+       ========================================== */
+    const setupSlider = (sliderId, prevId, nextId) => {
+        const slider = document.getElementById(sliderId);
+        const prev = document.getElementById(prevId);
+        const next = document.getElementById(nextId);
+        
+        if (slider && prev && next) {
+            prev.addEventListener('click', () => {
+                slider.scrollLeft -= 300;
+            });
+            next.addEventListener('click', () => {
+                slider.scrollLeft += 300;
+            });
+        }
+    };
+    
+    setupSlider('newsSlider', 'newsPrev', 'newsNext');
+    setupSlider('eventSlider', 'eventPrev', 'eventNext');
 });

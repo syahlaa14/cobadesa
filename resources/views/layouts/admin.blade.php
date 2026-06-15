@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>@yield('title', 'Admin Dashboard') - Desa Makmur Sentosa</title>
+    <title>@yield('title', 'Admin Dashboard') - Desa Pasir Kulon</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
             <div class="sidebar-header">
                 <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
                     <i class="fa-solid fa-mountain-sun"></i>
-                    <span>Makmur Admin</span>
+                    <span>Pasir Kulon Admin</span>
                 </a>
             </div>
             
@@ -48,15 +48,28 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('admin.tourism.index') }}" class="menu-link {{ Route::is('admin.tourism.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-umbrella-beach"></i>
-                            <span>Wisata & Pariwisata</span>
+                        <a href="{{ route('admin.news.index') }}" class="menu-link {{ Route::is('admin.news.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <span>Berita Desa</span>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href="{{ route('admin.events.index') }}" class="menu-link {{ Route::is('admin.events.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <span>Kegiatan / Event</span>
+                        </a>
+                    </li>
+
                     <li class="menu-item">
                         <a href="{{ route('admin.aspiration.index') }}" class="menu-link {{ Route::is('admin.aspiration.*') ? 'active' : '' }}">
                             <i class="fa-solid fa-comments"></i>
                             <span>Aspirasi Warga</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('admin.surat.index') }}" class="menu-link {{ Route::is('admin.surat.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-file-shield"></i>
+                            <span>Surat Pengajuan</span>
                         </a>
                     </li>
                 </ul>

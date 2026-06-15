@@ -2,7 +2,7 @@
 
 @section('title', 'Kelola Perangkat Desa')
 @section('page_heading', 'Perangkat Desa')
-@section('page_subheading', 'Manajemen data pejabat, staf, dan aparatur pemerintahan Desa Makmur Sentosa.')
+@section('page_subheading', 'Manajemen data pejabat, staf, dan aparatur pemerintahan Desa Pasir Kulon.')
 
 @section('content')
     <div class="panel-card">
@@ -49,19 +49,19 @@
                         @foreach($apparatuses as $person)
                             <tr>
                                 <td>
-                                    <div style="font-weight: 600; font-size: 1rem;">{{ $person->name }}</div>
+                                    <div style="font-weight: 600; font-size: 1rem;">{{ $person->nama }}</div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                        {{ $person->desc }}
+                                        {{ $person->keterangan_jabatan }}
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="badge badge-info">{{ $person->role }}</span>
+                                    <span class="badge badge-info">{{ $person->jabatan }}</span>
                                 </td>
                                 <td>
                                     <span style="font-size: 1.2rem; color: var(--accent-color); padding: 8px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; display: inline-flex;">
-                                        <i class="fa-solid {{ $person->icon }}"></i>
+                                        <i class="fa-solid {{ $person->foto }}"></i>
                                     </span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 6px;">{{ $person->icon }}</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 6px;">{{ $person->foto }}</span>
                                 </td>
                                 <td>
                                     <div style="font-size: 0.85rem; display: flex; flex-direction: column; gap: 4px;">
@@ -83,11 +83,11 @@
                                         <a href="{{ route('admin.apparatus.edit', $person->id) }}" class="btn btn-secondary btn-sm" title="Edit Data">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
-                                        <form action="{{ route('admin.apparatus.destroy', $person->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $person->name }}?');">
+                                        <form action="{{ route('admin.apparatus.destroy', $person->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $person->nama }}?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" title="Hapus Data">
-                                                <i class="fa-solid fa-trash-can"></i> Haps
+                                                <i class="fa-solid fa-trash-can"></i> Hapus
                                             </button>
                                         </form>
                                     </div>

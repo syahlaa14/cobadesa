@@ -13,85 +13,170 @@
             </h2>
         </div>
 
-        <form action="{{ $apparatus->exists ? route('admin.apparatus.update', $apparatus->id) : route('admin.apparatus.store') }}" method="POST">
+        <form action="{{ $apparatus->exists ? route('admin.apparatus.update', $apparatus->id) : route('admin.apparatus.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($apparatus->exists)
                 @method('PUT')
             @endif
 
-            <!-- Name -->
+            <!-- Nama -->
             <div class="form-group">
-                <label for="name" class="form-label">Nama Lengkap & Gelar</label>
+                <label for="nama" class="form-label">Nama Lengkap & Gelar</label>
                 <input 
                     type="text" 
-                    name="name" 
-                    id="name" 
-                    class="form-control @error('name') is-invalid @enderror" 
+                    name="nama" 
+                    id="nama" 
+                    class="form-control @error('nama') is-invalid @enderror" 
                     placeholder="Contoh: Drs. Bambang Wijaya, M.Si" 
-                    value="{{ old('name', $apparatus->name) }}" 
+                    value="{{ old('nama', $apparatus->nama) }}" 
                     required
                 >
-                @error('name')
+                @error('nama')
                     <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- Role/Jabatan -->
+            <!-- Jabatan -->
             <div class="form-group">
-                <label for="role" class="form-label">Jabatan Struktural</label>
+                <label for="jabatan" class="form-label">Jabatan Struktural</label>
                 <input 
                     type="text" 
-                    name="role" 
-                    id="role" 
-                    class="form-control @error('role') is-invalid @enderror" 
+                    name="jabatan" 
+                    id="jabatan" 
+                    class="form-control @error('jabatan') is-invalid @enderror" 
                     placeholder="Contoh: Kepala Desa / Sekretaris Desa / Kasi Pelayanan" 
-                    value="{{ old('role', $apparatus->role) }}" 
+                    value="{{ old('jabatan', $apparatus->jabatan) }}" 
                     required
                 >
-                @error('role')
+                @error('jabatan')
                     <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- FontAwesome Icon -->
+            <!-- NIP (Opsional) -->
             <div class="form-group">
-                <label for="icon" class="form-label">Ikon Perwakilan (FontAwesome class)</label>
+                <label for="nip" class="form-label">NIP (Opsional)</label>
+                <input 
+                    type="text" 
+                    name="nip" 
+                    id="nip" 
+                    class="form-control @error('nip') is-invalid @enderror" 
+                    placeholder="Contoh: 198012012010011002" 
+                    value="{{ old('nip', $apparatus->nip) }}" 
+                >
+                @error('nip')
+                    <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- SK Pengangkatan (Opsional) & Tanggal SK (Opsional) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="sk_pengangkatan" class="form-label">SK Pengangkatan (Opsional)</label>
+                    <input 
+                        type="text" 
+                        name="sk_pengangkatan" 
+                        id="sk_pengangkatan" 
+                        class="form-control @error('sk_pengangkatan') is-invalid @enderror" 
+                        placeholder="Contoh: 141/12/2022" 
+                        value="{{ old('sk_pengangkatan', $apparatus->sk_pengangkatan) }}" 
+                    >
+                    @error('sk_pengangkatan')
+                        <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggal_sk" class="form-label">Tanggal SK (Opsional)</label>
+                    <input 
+                        type="date" 
+                        name="tanggal_sk" 
+                        id="tanggal_sk" 
+                        class="form-control @error('tanggal_sk') is-invalid @enderror" 
+                        value="{{ old('tanggal_sk', $apparatus->tanggal_sk ? $apparatus->tanggal_sk->format('Y-m-d') : '') }}" 
+                    >
+                    @error('tanggal_sk')
+                        <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Ikon / Foto -->
+            <div class="form-group">
+                <label for="foto" class="form-label">Ikon Perwakilan (FontAwesome class) / URL Foto</label>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <input 
                         type="text" 
-                        name="icon" 
-                        id="icon" 
-                        class="form-control @error('icon') is-invalid @enderror" 
+                        name="foto" 
+                        id="foto" 
+                        class="form-control @error('foto') is-invalid @enderror" 
                         placeholder="Contoh: fa-user-tie, fa-building-user, fa-user-shield" 
-                        value="{{ old('icon', $apparatus->icon ?? 'fa-user') }}" 
+                        value="{{ old('foto', $apparatus->foto ?? 'fa-user') }}" 
                         required
                     >
                     <span style="font-size: 1.5rem; color: var(--accent-color); min-width: 40px; text-align: center;">
-                        <i class="fa-solid {{ old('icon', $apparatus->icon ?? 'fa-user') }}" id="iconPreview"></i>
+                        <i class="fa-solid {{ old('foto', $apparatus->foto ?? 'fa-user') }}" id="fotoPreview"></i>
                     </span>
                 </div>
                 <small style="color: var(--text-muted); display: block; margin-top: 6px;">
                     Gunakan class dari FontAwesome 6 (solid). Contoh: `fa-user-tie` (Kepala Desa/Laki-laki), `fa-user-graduate` (Pendidikan), `fa-shield-halved` (Keamanan).
                 </small>
-                @error('icon')
+                @error('foto')
                     <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- Description -->
+            <!-- Upload Foto Aparatur -->
             <div class="form-group">
-                <label for="desc" class="form-label">Tugas / Deskripsi Singkat</label>
-                <textarea 
-                    name="desc" 
-                    id="desc" 
-                    rows="4" 
-                    class="form-control @error('desc') is-invalid @enderror" 
-                    placeholder="Deskripsikan secara singkat fungsi jabatan atau profil dinas yang bersangkutan..." 
-                    required
-                >{{ old('desc', $apparatus->desc) }}</textarea>
-                @error('desc')
+                <label for="foto_file" class="form-label">Unggah Foto Resmi Aparatur (Pilihan)</label>
+                <input 
+                    type="file" 
+                    name="foto_file" 
+                    id="foto_file" 
+                    class="form-control @error('foto_file') is-invalid @enderror" 
+                    accept="image/*"
+                >
+                @if($apparatus->foto && \Illuminate\Support\Str::startsWith($apparatus->foto, 'uploads/'))
+                    <div style="margin-top: 10px;">
+                        <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Foto saat ini:</span>
+                        <img src="{{ asset($apparatus->foto) }}" alt="Foto Aparatur" style="max-height: 150px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    </div>
+                @endif
+                <small style="color: var(--text-muted); display: block; margin-top: 6px;">
+                    Format berkas: JPG, JPEG, PNG, WEBP. Maksimal ukuran 2MB. Jika mengunggah foto, ikon FontAwesome di atas akan diabaikan pada halaman publik.
+                </small>
+                @error('foto_file')
                     <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
                 @enderror
+            </div>
+
+            <!-- Keterangan Jabatan / Deskripsi -->
+            <div class="form-group">
+                <label for="keterangan_jabatan" class="form-label">Tugas / Deskripsi Singkat</label>
+                <textarea 
+                    name="keterangan_jabatan" 
+                    id="keterangan_jabatan" 
+                    rows="4" 
+                    class="form-control @error('keterangan_jabatan') is-invalid @enderror" 
+                    placeholder="Deskripsikan secara singkat fungsi jabatan atau profil dinas yang bersangkutan..." 
+                    required
+                >{{ old('keterangan_jabatan', $apparatus->keterangan_jabatan) }}</textarea>
+                @error('keterangan_jabatan')
+                    <span class="form-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Status Aktif -->
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <input 
+                    type="checkbox" 
+                    name="status_aktif" 
+                    id="status_aktif" 
+                    value="1" 
+                    style="width: 18px; height: 18px; cursor: pointer;"
+                    {{ old('status_aktif', $apparatus->exists ? $apparatus->status_aktif : 1) ? 'checked' : '' }}
+                >
+                <label for="status_aktif" class="form-label" style="margin-bottom: 0; cursor: pointer;">Aparatur Aktif dalam Pemerintahan</label>
             </div>
 
             <!-- Email Address -->
@@ -160,18 +245,18 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const iconInput = document.getElementById('icon');
-            const iconPreview = document.getElementById('iconPreview');
+            const fotoInput = document.getElementById('foto');
+            const fotoPreview = document.getElementById('fotoPreview');
             
-            if (iconInput && iconPreview) {
-                iconInput.addEventListener('input', function() {
-                    const iconName = iconInput.value.trim();
+            if (fotoInput && fotoPreview) {
+                fotoInput.addEventListener('input', function() {
+                    const iconName = fotoInput.value.trim();
                     // Reset to default if empty
                     if (iconName === '') {
-                        iconPreview.className = 'fa-solid fa-user';
-                    } else {
+                        fotoPreview.className = 'fa-solid fa-user';
+                    } else if (iconName.startsWith('fa-')) {
                         // Apply class
-                        iconPreview.className = 'fa-solid ' + iconName;
+                        fotoPreview.className = 'fa-solid ' + iconName;
                     }
                 });
             }

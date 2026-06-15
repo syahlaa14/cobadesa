@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('apparatuses', function (Blueprint $table) {
+        Schema::create('perangkat_desa', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('role');
-            $table->string('icon');
-            $table->text('desc');
+            $table->string('nama');
+            $table->string('jabatan');
+            $table->text('keterangan_jabatan')->nullable();
+            $table->string('nip')->nullable();
+            $table->string('sk_pengangkatan')->nullable();
+            $table->date('tanggal_sk')->nullable();
+            $table->boolean('status_aktif')->default(true);
+            $table->string('foto')->nullable();
+            
+            // Kolom sosial media untuk kompatibilitas frontend
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('email')->nullable();
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('apparatuses');
+        Schema::dropIfExists('perangkat_desa');
     }
 };

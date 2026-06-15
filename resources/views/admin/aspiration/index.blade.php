@@ -2,7 +2,7 @@
 
 @section('title', 'Kelola Aspirasi Warga')
 @section('page_heading', 'Aspirasi & Kontak Warga')
-@section('page_subheading', 'Melihat saran, aspirasi, keluhan, dan pesan langsung dari warga Desa Makmur Sentosa.')
+@section('page_subheading', 'Melihat saran, aspirasi, keluhan, dan pesan langsung dari warga Desa Pasir Kulon.')
 
 @section('content')
     <div class="panel-card">

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Website Resmi Profil Desa Makmur Sentosa. Informasi sejarah, statistik, aparatur desa, destinasi wisata, dan layanan publik mandiri online.">
-    <meta name="keywords" content="Desa Makmur Sentosa, Profil Desa, Wisata Desa, Layanan Desa Online, Pemerintahan Desa">
-    <meta name="author" content="Pemerintah Desa Makmur Sentosa">
+    <meta name="description" content="Website Resmi Profil Desa Pasir Kulon. Informasi sejarah, statistik, aparatur desa, destinasi wisata, dan layanan publik mandiri online.">
+    <meta name="keywords" content="Desa Pasir Kulon, Profil Desa, Wisata Desa, Layanan Desa Online, Pemerintahan Desa">
+    <meta name="author" content="Pemerintah Desa Pasir Kulon">
     
     <!-- CSRF Token for Laravel Security -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>Desa Makmur Sentosa - Harmoni Alam dan Kemajuan Teknologi</title>
+    <title>Desa Pasir Kulon - Harmoni Alam dan Kemajuan Teknologi</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/desa_hero_banner.png') }}">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS served via asset helper -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 </head>
 <body>
 
@@ -33,7 +33,7 @@
         <div class="container header-container">
             <a href="#home" class="logo" id="logoLink">
                 <i class="fa-solid fa-mountain-sun logo-icon"></i>
-                <span class="logo-text">Makmur<span>Sentosa</span></span>
+                <span class="logo-text">Pasir<span>Kulon</span></span>
             </a>
             
             <nav class="nav-menu" id="navMenu" aria-label="Navigasi Utama">
@@ -42,7 +42,6 @@
                     <li><a href="#about" class="nav-link">Tentang Kami</a></li>
                     <li><a href="#stats" class="nav-link">Statistik</a></li>
                     <li><a href="#apparatus" class="nav-link">Aparatur</a></li>
-                    <li><a href="#tourism" class="nav-link">Pariwisata</a></li>
                     <li><a href="#services" class="nav-link">Layanan Publik</a></li>
                     <li><a href="#contact" class="nav-link">Hubungi Kami</a></li>
                 </ul>
@@ -67,7 +66,7 @@
             <div class="footer-brand">
                 <a href="#home" class="logo">
                     <i class="fa-solid fa-mountain-sun logo-icon"></i>
-                    <span class="logo-text">Makmur<span>Sentosa</span></span>
+                    <span class="logo-text">Pasir<span>Kulon</span></span>
                 </a>
                 <p>Membangun dengan teknologi modern tanpa melupakan keindahan akar tradisi dan kelestarian alam nusantara.</p>
                 <div class="footer-socials">
@@ -85,7 +84,7 @@
                     <li><a href="#about"><i class="fa-solid fa-angle-right"></i> Tentang Kami</a></li>
                     <li><a href="#stats"><i class="fa-solid fa-angle-right"></i> Statistik Desa</a></li>
                     <li><a href="#apparatus"><i class="fa-solid fa-angle-right"></i> Aparatur Desa</a></li>
-                    <li><a href="#tourism"><i class="fa-solid fa-angle-right"></i> Wisata & Budaya</a></li>
+                    <li><a href="#news-events"><i class="fa-solid fa-angle-right"></i> Berita & Kegiatan</a></li>
                 </ul>
             </div>
             
@@ -102,7 +101,7 @@
         
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; {{ date('Y') }} Pemerintah Desa Makmur Sentosa. Seluruh Hak Cipta Dilindungi. <br>Dikembangkan dengan dedikasi untuk melayani warga.</p>
+                <p>&copy; {{ date('Y') }} Pemerintah Desa Pasir Kulon. Seluruh Hak Cipta Dilindungi. <br>Dikembangkan dengan dedikasi untuk melayani warga.</p>
             </div>
         </div>
     </footer>

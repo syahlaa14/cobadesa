@@ -2,7 +2,7 @@
 
 @section('title', 'Kelola Destinasi Wisata')
 @section('page_heading', 'Destinasi Wisata & Budaya')
-@section('page_subheading', 'Manajemen daya tarik pariwisata, sejarah, budaya, dan sarana rekreasi Desa Makmur Sentosa.')
+@section('page_subheading', 'Manajemen daya tarik pariwisata, sejarah, budaya, dan sarana rekreasi Desa Pasir Kulon.')
 
 @section('content')
     <div class="panel-card">

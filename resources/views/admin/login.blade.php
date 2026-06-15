@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - Desa Makmur Sentosa</title>
+    <title>Login Admin - Desa Pasir Kulon</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
     <div class="login-card">
         <div class="login-logo">
             <i class="fa-solid fa-mountain-sun"></i>
-            <span>Makmur Admin</span>
+            <span>Pasir Kulon Admin</span>
         </div>
         <p class="login-subtitle">Masuk ke Panel Pengelolaan Sistem Desa</p>
 

@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- Statistics Cards Grid -->
-    <div class="stats-grid">
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
         <!-- Stat Card 1 -->
         <div class="stat-card">
             <div class="stat-info">
@@ -17,20 +17,11 @@
                 <div class="stat-value">{{ $apparatusCount }}</div>
             </div>
             <div class="stat-icon icon-blue">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-users-gear"></i>
             </div>
         </div>
 
-        <!-- Stat Card 2 -->
-        <div class="stat-card">
-            <div class="stat-info">
-                <h3>Destinasi Wisata</h3>
-                <div class="stat-value">{{ $tourismCount }}</div>
-            </div>
-            <div class="stat-icon icon-purple">
-                <i class="fa-solid fa-map-location-dot"></i>
-            </div>
-        </div>
+
 
         <!-- Stat Card 3 -->
         <div class="stat-card">
@@ -40,6 +31,28 @@
             </div>
             <div class="stat-icon icon-green">
                 <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+        </div>
+
+        <!-- Stat Card 4 -->
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Surat Pengajuan</h3>
+                <div class="stat-value">{{ $suratCount }}</div>
+            </div>
+            <div class="stat-icon icon-yellow" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1);">
+                <i class="fa-solid fa-file-shield"></i>
+            </div>
+        </div>
+
+        <!-- Stat Card 5 -->
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Total Penduduk</h3>
+                <div class="stat-value">{{ $pendudukCount }}</div>
+            </div>
+            <div class="stat-icon icon-red" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);">
+                <i class="fa-solid fa-id-card"></i>
             </div>
         </div>
     </div>

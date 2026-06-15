@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apparatus extends Model
 {
+    protected $table = 'perangkat_desa';
     protected $guarded = [];
 }

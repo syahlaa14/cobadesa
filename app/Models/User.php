@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'penduduk_id',
     ];
 
     /**
@@ -45,5 +47,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function penduduk()
+    {
+        return $this->belongsTo(Penduduk::class, 'penduduk_id');
+    }
+
+    public function berita()
+    {
+        return $this->hasMany(Berita::class, 'user_id');
+    }
+
+    public function suratOperator()
+    {
+        return $this->hasMany(Surat::class, 'operator_id');
     }
 }
